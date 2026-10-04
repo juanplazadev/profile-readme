@@ -7,7 +7,8 @@ stats, draws about 15 animated SVG slices with an embedded, subset JetBrains Mon
 
 Object-oriented PHP 8.5 in Docker. A port of
 [georgekobaidze/georgekobaidze](https://github.com/georgekobaidze/georgekobaidze)'s Python
-generator; the original design is his (MIT).
+generator; the original design is his (MIT). The port was written with
+[Claude Opus 5.5](https://www.anthropic.com/claude) via Claude Code.
 
 ## What it writes
 
