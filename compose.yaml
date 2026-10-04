@@ -1,0 +1,23 @@
+services:
+  profile:
+    build: { context: ., target: prod }
+    image: juanplazadev-profile
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - PROFILE_TOKEN
+      - GITHUB_TOKEN
+      - DEV_API_KEY
+    user: "${UID:-1000}:${GID:-1000}"
+    volumes:
+      - .:/app
+      - /app/vendor            # keep the image's vendor/ instead of the (absent) host one
+      - ${OUT_DIR:-./out}:/target   # README.md + profile/ land here; point OUT_DIR at a profile-repo checkout
+
+  test:
+    build: { context: ., target: dev }
+    image: juanplazadev-profile-dev
+    volumes:
+      - .:/app
+      - /app/vendor

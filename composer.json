@@ -1,0 +1,23 @@
+{
+    "name": "juanplazadev/profile",
+    "description": "Renders the juanplazadev GitHub profile README: fetches GitHub/DEV stats, draws the console SVG slices, rewrites README.md.",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.5",
+        "ext-curl": "*",
+        "ext-dom": "*",
+        "ext-gmp": "*",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.0"
+    },
+    "autoload": {
+        "psr-4": { "JuanPlaza\\Profile\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "JuanPlaza\\Profile\\Tests\\": "tests/" }
+    },
+    "config": { "sort-packages": true }
+}

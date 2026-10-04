@@ -1,0 +1,8 @@
+/vendor/
+/composer.lock
+/.env
+/.phpunit.cache/
+.DS_Store
+/.idea/
+/out/*
+!/out/.gitkeep

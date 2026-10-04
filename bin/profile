@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use JuanPlaza\Profile\Console\Application;
+
+$root = dirname(__DIR__);
+require "$root/vendor/autoload.php";
+
+// where README.md and profile/ are written: a checkout of the profile repo in CI, ./out locally
+$target = getenv('PROFILE_TARGET') ?: "$root/out";
+if (!is_dir($target)) {
+    mkdir($target, 0o755, true);
+}
+
+exit(new Application($root, realpath($target))->run($argv));
