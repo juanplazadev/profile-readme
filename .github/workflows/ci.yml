@@ -1,7 +1,7 @@
 name: ci
 
 # The daily refresh itself runs from the profile repo (juanplazadev/juanplazadev), on the
-# VPS runner; see DEPLOY.md. This workflow only tests the generator.
+# VPS runner; see deploy/site-repo. This workflow only tests the generator.
 on:
   push:
     branches: [main]

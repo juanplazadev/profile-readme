@@ -54,4 +54,5 @@ Environment variables, all optional (see `.env.example`):
 Output is deterministic: unchanged data gives byte-identical files, so the daily job only commits
 when something actually changed.
 
-Deployment (daily refresh on the VPS runner): see [DEPLOY.md](DEPLOY.md).
+Deployment: the daily refresh runs on the VPS runner from the site repo's workflow, a copy of
+[`deploy/site-repo/.github/workflows/profile.yml`](deploy/site-repo/.github/workflows/profile.yml).

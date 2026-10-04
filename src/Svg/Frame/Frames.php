@@ -29,11 +29,6 @@ final readonly class Frames
         .dot{animation:pulse 2s ease-in-out infinite}
         CSS;
 
-    private const string FILTERS = <<<'SVG'
-        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
-        <filter id="g" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur stdDeviation="4"/></filter>
-        SVG;
-
     private const string REDUCED_MOTION = '@media (prefers-reduced-motion:reduce){*{animation:none!important}}';
 
     public function __construct(private FontSubsetter $fonts) {}
@@ -78,7 +73,7 @@ final readonly class Frames
         $fh = $y1 - $y0;
         $grid = $this->grid();
 
-        return $this->document(G::W, $h, $title, $desc, $text . Markup::visible($body), $weights, $css, $grid . "\n" . self::FILTERS . ($defs ? "\n$defs" : ''), <<<SVG
+        return $this->document(G::W, $h, $title, $desc, $text . Markup::visible($body), $weights, $css, $grid . "\n" . $this->filters(G::W, $h) . ($defs ? "\n$defs" : ''), <<<SVG
             <path d="$glow" fill="none" stroke="$cy" stroke-width="3" opacity=".55" filter="url(#glow)"/>
             <rect x="$fl" y="$y0" width="$fw" height="$fh" fill="#03040a"/>
             <rect x="$fl" y="$y0" width="$fw" height="$fh" fill="url(#grid)"/>
@@ -98,7 +93,7 @@ final readonly class Frames
         $cy = Color::Cyan->value;
         $glowEnd = $h + 40;
 
-        return $this->document(G::HW, $h, $title, $desc, $text . Markup::visible($body), [400, 700], '', $this->grid() . "\n" . self::FILTERS, <<<SVG
+        return $this->document(G::HW, $h, $title, $desc, $text . Markup::visible($body), [400, 700], '', $this->grid() . "\n" . $this->filters(G::HW, $h), <<<SVG
             <path d="M$rx -40V$glowEnd" fill="none" stroke="$cy" stroke-width="3" opacity=".55" filter="url(#glow)"/>
             <rect x="$bx0" y="0" width="$bw" height="$h" fill="#03040a"/>
             <rect x="$bx0" y="0" width="$bw" height="$h" fill="url(#grid)"/>
@@ -128,7 +123,7 @@ final readonly class Frames
         $railPath = $rails ? "\n<path d=\"$rails\" fill=\"none\" stroke=\"$cy\" stroke-width=\"1.2\"/>" : '';
         $gridX = ((-$x0 % 40) + 40) % 40;   // Python's modulo: always non-negative
 
-        return $this->document($seg, $h, $title, $desc, $text . Markup::visible($body), [400, 700], '', $this->grid($gridX) . "\n" . self::FILTERS,
+        return $this->document($seg, $h, $title, $desc, $text . Markup::visible($body), [400, 700], '', $this->grid($gridX) . "\n" . $this->filters($seg, $h),
             $glowPath . <<<SVG
             <rect x="$bg0" y="0" width="$bw" height="$h" fill="#03040a"/>
             <rect x="$bg0" y="0" width="$bw" height="$h" fill="url(#grid)"/>
@@ -161,6 +156,17 @@ final readonly class Frames
             </svg>
 
             SVG;
+    }
+
+    /**
+     * The glow region is in user space: a half or segment glows a single vertical rail, whose
+     * bounding box has zero width, so a percentage region would be empty and draw nothing.
+     */
+    private function filters(int $w, int $h): string
+    {
+        return '<filter id="glow" filterUnits="userSpaceOnUse" x="-40" y="-80" width="' . ($w + 80) . '" height="' . ($h + 160) . '">'
+            . '<feGaussianBlur stdDeviation="6"/></filter>' . "\n"
+            . '<filter id="g" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur stdDeviation="4"/></filter>';
     }
 
     private function grid(int $x = 0): string
