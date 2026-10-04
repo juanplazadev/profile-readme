@@ -3,3 +3,6 @@ vendor
 .env
 .phpunit.cache
 out
+
+# Generated profile README assets (juanplazadev/profile-readme)
+/profile

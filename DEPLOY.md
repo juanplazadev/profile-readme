@@ -57,7 +57,8 @@ Your clone at `~/Documents/Projects/juanplazadev` has uncommitted work, so do th
 worktree. Your working tree stays untouched.
 
 ```sh
-cd ~/Documents/Projects/juanplazadev
+cd ~/Documents/Projects/juanplazadev          # the SITE repo, not juanplazadev-github
+git remote get-url origin                     # must print …juanplazadev/juanplazadev.git, stop otherwise
 git fetch origin
 git worktree add ../juanplazadev-profile -b feat/profile-console origin/main
 cd ../juanplazadev-profile
